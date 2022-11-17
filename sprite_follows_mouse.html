@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sprite Follows Mouse</title>
+    <script src="js/pixi.min.5.2.0.js"></script>
+    <script>
+        let app;
+        let player;
+
+        // Could also put this in the bottom of the body
+        window.onload = function () {
+            app = new PIXI.Application({
+                width: 600,
+                height: 500,
+                backgroundColor: 0xAAAAAA,
+            });
+
+            document.body.appendChild(app.view);
+
+            // ------------------------------------------------
+            // Create a player object (sprite to follow cursor)
+            // ------------------------------------------------
+            player = new PIXI.Sprite.from("images/tardis.png");
+
+            // Set anchor position
+            player.anchor.set(0.5);
+
+            // Center on screen
+            player.x = app.view.width / 2;
+            player.y = app.view.height / 2;
+
+            // Add the player to the stage
+            app.stage.addChild(player);
+
+            // ------------------------------------------------
+            // Mouse Interactions
+            // ------------------------------------------------
+            app.stage.interactive = true;
+            app.stage.on("pointermove", movePlayer);
+
+            function movePlayer(event) {
+                let mouse_position = event.data.global;
+
+                player.x = mouse_position.x;
+                player.y = mouse_position.y;
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <p><a href="./index.html">home</a></p>
+    <h1>PIXI.js - Sprite Follow Cursor</h1>
+</body>
+
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Custom Cursor</title>
+    <script src="js/pixi.min.js"></script>
+</head>
+
+<body>
+    <p><a href="./index.html">home</a></p>
+    <h1>PIXI.js - Custom Cursor</h1>
+    <script>
+        // EXAMPLE: https://pixijs.io/examples/#/events/custom-mouse-icon.js
+
+        const app = new PIXI.Application({ background: '#1099bb' });
+        document.body.appendChild(app.view);
+
+        // Css style for icons
+        const defaultIconStyle = "pointer";
+
+        // Add custom cursor styles
+        app.renderer.events.cursorStyles.default = defaultIconStyle;
+    </script>
+</body>
+
+</html>

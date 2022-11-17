@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Laser Cursor</title>
+    <script src="js/pixi.min.js"></script>
+</head>
+
+<body>
+    <p><a href="./index.html">home</a></p>
+    <h1>PIXI.js - Laser Cursor</h1>
+    <script>
+        // Create PIXI application and append it to the browser document body.
+        const app = new PIXI.Application({ background: '#1099bb' });
+        document.body.appendChild(app.view);
+
+        // Set some constants
+        const CURSOR_STYLE = "crosshair";
+        const CENTER_X = app.view.width / 2;
+        const CENTER_Y = app.view.height / 2;
+
+        // Provide CSS for the mouse pointer
+        app.renderer.events.cursorStyles.default = CURSOR_STYLE;
+
+        /****************************************************
+         ** Create a sprite object for the user icon
+         ****************************************************/
+        const laserSprite = PIXI.Sprite.from('images/user_1.png');
+
+        // Center the sprite's anchor point
+        laserSprite.anchor.set(0.5);
+
+        // Center the sprite on the stage
+        laserSprite.x = CENTER_X;
+        laserSprite.y = CENTER_Y;
+
+        // Add the sprite to the stage
+        app.stage.addChild(laserSprite);
+
+        /****************************************************
+         ** Create a text object for the user icon
+         ** https://pixijs.io/examples/#/text/text.js
+         ****************************************************/
+        const textSprite = new PIXI.Text('Matt',
+            {
+                fontFamily: 'Arial',
+                fontSize: 12,
+                fontStyle: 'italic',
+                fill: '#000000', // gradient
+            }
+        );
+        textSprite.x = CENTER_X;
+        textSprite.y = CENTER_Y;
+
+        app.stage.addChild(textSprite);
+
+        /****************************************************
+         ** Mouse Interactions
+         ****************************************************/
+        app.stage.interactive = true;
+
+        // Watch pointer moves on the stage
+        app.stage.on("pointermove", moveLaserSprite); // from PIXIjs v5.2.0
+
+        function moveLaserSprite(event) {
+            let cursor_position = event.data.global;
+
+            // Set the position of the user icon based on the cursor position
+            laserSprite.x = cursor_position.x;
+            laserSprite.y = cursor_position.y;
+
+            // Set the position of the user icon based on the cursor position
+            textSprite.x = cursor_position.x;
+            textSprite.y = cursor_position.y;
+        }
+    </script>
+</body>
+
+</html>
