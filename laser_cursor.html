@@ -23,41 +23,43 @@
         const CENTER_Y = app.view.height / 2;
         const USER_NAME = "Matt";
         const LASER_COLOR = "green";
+        const TEXT_STYLE = {
+            fontFamily: 'Arial',
+            fontSize: 11,
+            fill: '#000000', // gradient
+        };
 
         // Provide CSS for the mouse pointer
         app.renderer.events.cursorStyles.default = CURSOR_STYLE;
 
         /****************************************************
-         ** Create a sprite object for the user icon
+         ** Create a container object for the laser cursor
          ****************************************************/
+        const laserDetails = new PIXI.Container();
+        app.stage.addChild(laserDetails);
+
+        // Add the user icon to the laser details container
         const laserSprite = PIXI.Sprite.from('images/user_1.png');
-
-        // Center the sprite's anchor point
         laserSprite.anchor.set(0.5);
+        laserDetails.addChild(laserSprite);
 
-        // Center the sprite on the stage
-        laserSprite.x = CENTER_X;
-        laserSprite.y = CENTER_Y;
-
-        // Add the sprite to the stage
-        app.stage.addChild(laserSprite);
-
-        /****************************************************
-         ** Create a text object for the user icon
-         ** https://pixijs.io/examples/#/text/text.js
-         ****************************************************/
+        // Add the text to the laser details container 
+        // https://pixijs.io/examples/#/text/text.js
         const textSprite = new PIXI.Text(`${USER_NAME}\n(${LASER_COLOR})`,
             {
                 fontFamily: 'Arial',
-                fontSize: 12,
-                fontStyle: 'italic',
+                fontSize: 11,
                 fill: '#000000', // gradient
             }
         );
-        textSprite.x = CENTER_X;
-        textSprite.y = CENTER_Y;
+        textSprite.anchor.set(0.5);
+        laserDetails.addChild(textSprite);
 
-        app.stage.addChild(textSprite);
+        // Move container to the center
+        laserDetails.x = CENTER_X;
+        laserDetails.y = CENTER_Y;
+
+        app.stage.addChild(laserDetails);
 
         /****************************************************
          ** Mouse Interactions
@@ -65,18 +67,15 @@
         app.stage.interactive = true;
 
         // Watch pointer moves on the stage
-        app.stage.on("pointermove", moveLaserSprite); // from PIXIjs v5.2.0
+        // TODO: Need another background object so our listener covers entire canvas
+        app.stage.on("pointermove", moveLaserDetails);
 
-        function moveLaserSprite(event) {
+        function moveLaserDetails(event) {
             let cursor_position = event.data.global;
 
             // Set the position of the user icon based on the cursor position
-            laserSprite.x = cursor_position.x;
-            laserSprite.y = cursor_position.y;
-
-            // Set the position of the user icon based on the cursor position
-            textSprite.x = cursor_position.x;
-            textSprite.y = cursor_position.y;
+            laserDetails.x = cursor_position.x;
+            laserDetails.y = cursor_position.y;
         }
     </script>
 </body>
