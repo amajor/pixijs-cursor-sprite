@@ -21,6 +21,8 @@
         const CURSOR_STYLE = "crosshair";
         const CENTER_X = app.view.width / 2;
         const CENTER_Y = app.view.height / 2;
+        const USER_NAME = "Matt";
+        const LASER_COLOR = "green";
 
         // Provide CSS for the mouse pointer
         app.renderer.events.cursorStyles.default = CURSOR_STYLE;
@@ -44,7 +46,7 @@
          ** Create a text object for the user icon
          ** https://pixijs.io/examples/#/text/text.js
          ****************************************************/
-        const textSprite = new PIXI.Text('Matt',
+        const textSprite = new PIXI.Text(`${USER_NAME}\n(${LASER_COLOR})`,
             {
                 fontFamily: 'Arial',
                 fontSize: 12,
