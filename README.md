@@ -1,6 +1,6 @@
 # PIXI.js - Cursor Interactions
 
-These are just some simple interactions with PIXI.js and the cursor as I learn how it works.
+These are just some simple interactions with PIXI.js and the cursor as I learn how it works. You can see the rendered examples at https://amajor.github.io/pixijs-cursor-sprite/
 
 If you use VS Code, installing [Live Server](https://github.com/ritwickdey/vscode-live-server) and then pressing "Go Live" will then run your [index.html](./index.html) which links to the following:
 
