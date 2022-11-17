@@ -13,8 +13,15 @@
     <p><a href="./index.html">home</a></p>
     <h1>PIXI.js - Laser Cursor</h1>
     <script>
+        const CANVAS_WIDTH = 600;
+        const CANVAS_HEIGHT = 400;
+
         // Create PIXI application and append it to the browser document body.
-        const app = new PIXI.Application({ background: '#1099bb' });
+        const app = new PIXI.Application({
+            background: '#1099bb', // blue-ish
+            width: CANVAS_WIDTH,
+            height: CANVAS_HEIGHT,
+        });
         document.body.appendChild(app.view);
 
         // Set some constants
@@ -26,8 +33,10 @@
         const TEXT_STYLE = {
             fontFamily: 'Arial',
             fontSize: 11,
-            fill: '#000000', // gradient
+            fill: '#000000',
         };
+        const USER_ICON_WIDTH = 40;
+        const USER_ICON_HEIGHT = 40;
 
         // Provide CSS for the mouse pointer
         app.renderer.events.cursorStyles.default = CURSOR_STYLE;
@@ -38,12 +47,20 @@
         const laserDetails = new PIXI.Container();
         app.stage.addChild(laserDetails);
 
-        // Add the user icon to the laser details container
-        const laserSprite = PIXI.Sprite.from('images/user_1.png');
-        laserSprite.anchor.set(0.5);
-        laserDetails.addChild(laserSprite);
+        // Add a new full-size sprite to the stage for better listening for events
+        var invisibleListenerSprite = new PIXI.Sprite();
+        invisibleListenerSprite.width = CANVAS_WIDTH;
+        invisibleListenerSprite.height = CANVAS_HEIGHT;
+        app.stage.addChild(invisibleListenerSprite);
 
-        // Add the text to the laser details container 
+        // Add and position the user icon to the laser details container
+        const userSprite = PIXI.Sprite.from('images/user_1.png');
+        userSprite.anchor.set(0, 1);
+
+        // Add the user icon to the container
+        laserDetails.addChild(userSprite);
+
+        // Add and position the text to the laser details container 
         // https://pixijs.io/examples/#/text/text.js
         const textSprite = new PIXI.Text(`${USER_NAME}\n(${LASER_COLOR})`,
             {
@@ -52,7 +69,10 @@
                 fill: '#000000', // gradient
             }
         );
-        textSprite.anchor.set(0.5);
+        textSprite.anchor.set(0, 1);
+        textSprite.x = USER_ICON_WIDTH + 5;  // offset x pixels from the cursor horizontally
+
+        // Add the user icon to the container
         laserDetails.addChild(textSprite);
 
         // Move container to the center
@@ -67,7 +87,6 @@
         app.stage.interactive = true;
 
         // Watch pointer moves on the stage
-        // TODO: Need another background object so our listener covers entire canvas
         app.stage.on("pointermove", moveLaserDetails);
 
         function moveLaserDetails(event) {
